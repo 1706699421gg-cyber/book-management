@@ -94,7 +94,7 @@
 ### 1. 获取代码
 
 ```bash
-git clone <你的仓库地址>
+git clone https://github.com/1706699421gg-cyber/book-management.git
 cd book-management
 ```
 
