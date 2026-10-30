@@ -1,0 +1,47 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: book-backend
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # =========================================================
+    # ★★★ 修改数据库密码的位置 ★★★
+    # 这里的 password 只是占位值, 请改成你本机 MySQL 的密码;
+    # 也可以直接运行 setup-db.bat, 脚本会询问密码并自动写回本文件。
+    # 注意: 不要把真实密码提交到公开仓库。
+    # =========================================================
+    url: jdbc:mysql://localhost:3306/book_management?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: 'root'
+    password: '123456'
+  jackson:
+    # 统一时区, 保证 LocalDateTime 序列化正确
+    time-zone: Asia/Shanghai
+
+mybatis-plus:
+  # XML 位置(本项目用注解 SQL, 该配置保留以备扩展)
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.example.book.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    # Map 查询结果中 null 值也放入 key
+    call-setters-on-nulls: true
+    # 控制台打印 SQL, 方便调试; 上线可注释
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    banner: false
+    db-config:
+      # 主键自增
+      id-type: auto
+
+logging:
+  level:
+    com.example.book: debug
+
+app:
+  auth:
+    # 登录令牌签名密钥(上线前请修改为自己的随机字符串)
+    secret: 'book-management-token-secret-change-me-2024'
+    # 令牌有效期(分钟), 默认 12 小时
+    expire-minutes: 720
